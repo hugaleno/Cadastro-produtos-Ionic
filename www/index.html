@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+  </head>
+  <body ng-app="starter">
+
+    <ion-pane ng-controller="cadastroProdutoCtrl">
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">Cadastro de produtos</h1>
+      </ion-header-bar>
+      <ion-content class="has-header" padding >
+                
+            <form name="formCadastroProduto">
+                
+              <label class="item item-input" style="margin-bottom:10px;">
+                  <span class="input-label">Nome:</span>
+                  <input type="text" required ng-model="produto.nome" placeholder="Banana"/>         
+              </label>
+
+              <label class="item item-input" style="margin-bottom:10px;">
+                   <span class="input-label">Preço:</span>
+                  <input type="text" required ui-money-mask="2" ng-model="produto.preco"/>
+
+              </label>
+              <div class="item item-input-inset" style="margin-bottom:10px;">
+                 <span class="input-label">Quantidade:</span>
+                  <button ion-button ng-click="diminuiQuantidade()"  color="light" icon-only>
+                    <i class="icon ion-chevron-down"></i>
+                 </button>
+                  
+                 <input type="number" min="0" ng-init="produto.quantidade=1"  style="margin:10px;width:15%;"ng-model="produto.quantidade"/>
+                  
+                  <button ion-button ng-click="aumentaQuantidade()" color="light" icon-only>
+                    <i class="icon ion-chevron-up"></i>
+                  </button>
+              </div>
+            </form>
+          <button ng-disabled="!formCadastroProduto.$valid" class="button button-block button-assertive" style="margin-bottom:20px;"  ng-click="cadastrarProduto()">
+            Cadastrar
+          </button>
+          
+          <ul class="list"  >
+              <div class="item item-divider">
+                    Produtos salvos
+              </div>
+            <li ng-repeat="item in produtos" class="item">
+                Produto:{{item.nome}}- -Preço:{{item.preco}}- -Quantidade:{{item.quantidade}}
+            </li>
+          </ul>
+          
+      </ion-content>
+    </ion-pane>
+  </body>
+    <script src="lib/ionic/angular-locale_pt-br.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-input-masks/2.5.0/angular-input-masks-standalone.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+    <script>
+  // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyA7rkdpuFzN32LtJu_GyDS9T3YQfHPDhKU",
+            authDomain: "cadastroproduto-4d57d.firebaseapp.com",
+            databaseURL: "https://cadastroproduto-4d57d.firebaseio.com",
+            projectId: "cadastroproduto-4d57d",
+            storageBucket: "cadastroproduto-4d57d.appspot.com",
+            messagingSenderId: "304749329488"
+        };
+        firebase.initializeApp(config);
+    </script>
+</html>
